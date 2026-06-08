@@ -6,10 +6,6 @@
 
 body {
     font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: #f4f4f4;
 }
 
@@ -61,4 +57,63 @@ button:hover {
     margin-top: 15px;
     text-align: center;
     font-weight: bold;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background: #2563eb;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.login-page{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
