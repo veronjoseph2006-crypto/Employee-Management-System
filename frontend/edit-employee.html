@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
 
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="form-container">
 
         <h1>Edit Employee</h1>
 
-        <form>
+        <form id="editForm">
 
             <label>Employee ID</label>
             <input type="text" value="EMP001">
@@ -37,10 +39,22 @@
             <input type="number" value="50000">
 
             <button type="submit">Update Employee</button>
+            <p id="updateMessage"></p>
 
         </form>
 
     </div>
+    <script>
+        const editForm = document.getElementById("editForm");
+        const updateMessage = document.getElementById("updateMessage");
+
+        editForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            updateMessage.textContent = "Employee Updated Successfully";
+        });
+    </script>
 
 </body>
+
 </html>
