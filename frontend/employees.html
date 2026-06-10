@@ -38,8 +38,10 @@
                     <td>IT</td>
                     <td>Developer</td>
                     <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <a href="edit-employee.html">
+                            <button>Edit</button>
+                        </a>
+                        <button onclick="confirmDelete()">Delete</button>
                     </td>
                 </tr>
 
@@ -52,7 +54,7 @@
                         <a href="edit-employee.html">
                             <button>Edit</button>
                         </a>
-                        <button>Delete</button>
+                        <button onclick="confirmDelete()">Delete</button>
                     </td>
                 </tr>
 
@@ -61,6 +63,16 @@
         </table>
 
     </div>
+
+    <script>
+        function confirmDelete() {
+            const result = confirm("Are you sure you want to delete this employee?");
+
+            if (result) {
+                alert("Employee Deleted Successfully");
+            }
+        }
+    </script>
 
 </body>
 
