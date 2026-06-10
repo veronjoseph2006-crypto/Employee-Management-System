@@ -5,7 +5,7 @@ const app = express();
 const PORT = 3000;
 
 app.get("/", (req, res) => {
-    res.send("Employee Management System Server Running");
+    res.send("<h1>Employee Management System Backend Running</h1>");
 });
 
 app.listen(PORT, () => {
