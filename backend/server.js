@@ -13,25 +13,30 @@ db.run(`
         position TEXT
     )
 `);
+db.get("SELECT COUNT(*) AS count FROM employees", (err, row) => {
+    if (row.count === 0) {
+        db.run(`
+            INSERT INTO employees (employee_id, name, department, position)
+            VALUES
+            ('EMP001', 'John Doe', 'IT', 'Developer'),
+            ('EMP002', 'Jane Smith', 'HR', 'Manager')
+        `);
+    }
+});
 
 app.get("/", (req, res) => {
     res.send("<h1>Employee Management System Backend Running</h1>");
 });
 app.get("/employees", (req, res) => {
-    res.json([
-        {
-            id: "EMP001",
-            name: "John Doe",
-            department: "IT"
-        },
-        {
-            id: "EMP002",
-            name: "Jane Smith",
-            department: "HR"
+    db.all("SELECT * FROM employees", [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
         }
-    ]);
-});
 
+        res.json(rows);
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
