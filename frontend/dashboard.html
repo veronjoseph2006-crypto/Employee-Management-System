@@ -17,10 +17,21 @@
             <h2>EMS</h2>
 
             <ul>
-                <li>Dashboard</li>
-                <li>Employees</li>
-                <li>Departments</li>
-                <li>Logout</li>
+                <li>
+                    <a href="dashboard.html">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="employees.html">Employees</a>
+                </li>
+
+                <li>
+                    <a href="#">Departments</a>
+                </li>
+
+                <li>
+                    <a href="login.html">Logout</a>
+                </li>
             </ul>
         </div>
 
@@ -38,12 +49,12 @@
 
                 <div class="card">
                     <h3>Departments</h3>
-                    <p>4</p>
+                    <p id="departments">0</p>
                 </div>
 
                 <div class="card">
-                    <h3>New Hires</h3>
-                    <p>3</p>
+                    <h3>Highest Salary</h3>
+                    <p id="highestSalary">0</p>
                 </div>
 
             </div>
@@ -56,6 +67,19 @@
 
             const response = await fetch("http://localhost:3000/employees");
             const employees = await response.json();
+            const departments = [
+                ...new Set(employees.map(emp => emp.department))
+            ];
+
+            document.getElementById("departments").textContent =
+                departments.length;
+
+            const highestSalary = Math.max(
+                ...employees.map(emp => Number(emp.salary))
+            );
+
+            document.getElementById("highestSalary").textContent =
+                highestSalary;
 
             document.getElementById("totalEmployees").textContent =
                 employees.length;

@@ -183,3 +183,12 @@ th {
     font-weight: bold;
     color: green;
 }
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar a:hover {
+    opacity: 0.8;
+}
