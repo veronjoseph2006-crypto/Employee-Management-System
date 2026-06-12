@@ -17,26 +17,19 @@
 
         <form id="editForm">
 
-            <label>Employee ID</label>
-            <input type="text" value="EMP001">
+            <input type="text" id="employeeId">
 
-            <label>Employee Name</label>
-            <input type="text" value="John Doe">
+            <input type="text" id="employeeName">
 
-            <label>Email</label>
-            <input type="email" value="john@example.com">
+            <input type="email" id="email">
 
-            <label>Phone Number</label>
-            <input type="tel" value="9876543210">
+            <input type="tel" id="phone">
 
-            <label>Department</label>
-            <input type="text" value="IT">
+            <input type="text" id="department">
 
-            <label>Position</label>
-            <input type="text" value="Developer">
+            <input type="text" id="position">
 
-            <label>Salary</label>
-            <input type="number" value="50000">
+            <input type="number" id="salary">
 
             <button type="submit">Update Employee</button>
             <p id="updateMessage"></p>
@@ -45,13 +38,53 @@
 
     </div>
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
         const editForm = document.getElementById("editForm");
         const updateMessage = document.getElementById("updateMessage");
+        async function loadEmployee() {
 
-        editForm.addEventListener("submit", function (event) {
+            const response = await fetch(`http://localhost:3000/employees/${id}`);
+            const employee = await response.json();
+
+            document.getElementById("employeeId").value = employee.employee_id;
+            document.getElementById("employeeName").value = employee.name;
+            document.getElementById("email").value = employee.email;
+            document.getElementById("phone").value = employee.phone;
+            document.getElementById("department").value = employee.department;
+            document.getElementById("position").value = employee.position;
+            document.getElementById("salary").value = employee.salary;
+
+        }
+
+        loadEmployee();
+
+        editForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            updateMessage.textContent = "Employee Updated Successfully";
+            const employee = {
+                employee_id: document.getElementById("employeeId").value,
+                name: document.getElementById("employeeName").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                department: document.getElementById("department").value,
+                position: document.getElementById("position").value,
+                salary: document.getElementById("salary").value
+            };
+
+            const response = await fetch(`http://localhost:3000/employees/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(employee)
+            });
+
+            const data = await response.json();
+
+            
+
+            window.location.href = "employees.html";
         });
     </script>
 

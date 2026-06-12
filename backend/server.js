@@ -20,122 +20,139 @@ db.run(`
 )
 `);
 db.get("SELECT COUNT(*) AS count FROM employees", (err, row) => {
+  if (err) {
+    console.log("Database Error:", err.message);
+    return;
+  }
 
-    if (err) {
-        console.log("Database Error:", err.message);
-        return;
-    }
-
-    if (row && row.count === 0) {
-
-        db.run(`
+  if (row && row.count === 0) {
+    db.run(`
             INSERT INTO employees
             (employee_id, name, email, phone, department, position, salary)
             VALUES
             ('EMP001', 'John Doe', 'john@example.com', '9876543210', 'IT', 'Developer', 50000),
             ('EMP002', 'Jane Smith', 'jane@example.com', '9876543211', 'HR', 'Manager', 60000)
         `);
-
-    }
+  }
 });
 
 app.get("/", (req, res) => {
-    res.send("<h1>Employee Management System Backend Running</h1>");
+  res.send("<h1>Employee Management System Backend Running</h1>");
 });
 app.get("/employees", (req, res) => {
-    db.all("SELECT * FROM employees", [], (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
+  db.all("SELECT * FROM employees", [], (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
 
-        res.json(rows);
-    });
+    res.json(rows);
+  });
 });
 app.get("/test-add", (req, res) => {
-
-    db.run(
-        `INSERT INTO employees
+  db.run(
+    `INSERT INTO employees
         (employee_id, name, email, phone, department, position, salary)
         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [
-            "EMP999",
-            "Veron",
-            "veron@example.com",
-            "9876543210",
-            "IT",
-            "Intern",
-            25000
-        ],
-        function(err) {
+    [
+      "EMP999",
+      "Veron",
+      "veron@example.com",
+      "9876543210",
+      "IT",
+      "Intern",
+      25000,
+    ],
+    function (err) {
+      if (err) {
+        return res.send(err.message);
+      }
 
-            if (err) {
-                return res.send(err.message);
-            }
-
-            res.send("Employee Added");
-
-        }
-    );
-
+      res.send("Employee Added");
+    },
+  );
 });
 app.post("/employees", (req, res) => {
+  const { employee_id, name, email, phone, department, position, salary } =
+    req.body;
 
-    const {
-        employee_id,
-        name,
-        email,
-        phone,
-        department,
-        position,
-        salary
-    } = req.body;
-
-    db.run(
-        `INSERT INTO employees
+  db.run(
+    `INSERT INTO employees
         (employee_id, name, email, phone, department, position, salary)
         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [employee_id, name, email, phone, department, position, salary],
+    [employee_id, name, email, phone, department, position, salary],
 
-        function (err) {
+    function (err) {
+      if (err) {
+        return res.status(500).json({
+          error: err.message,
+        });
+      }
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            res.json({
-                message: "Employee Added Successfully"
-            });
-
-        }
-    );
-
+      res.json({
+        message: "Employee Added Successfully",
+      });
+    },
+  );
 });
 app.delete("/employees/:id", (req, res) => {
+  const id = req.params.id;
 
-    const id = req.params.id;
+  db.run("DELETE FROM employees WHERE id = ?", [id], function (err) {
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
 
-    db.run(
-        "DELETE FROM employees WHERE id = ?",
-        [id],
-        function (err) {
+    res.json({
+      message: "Employee Deleted Successfully",
+    });
+  });
+});
+app.put("/employees/:id", (req, res) => {
+  const id = req.params.id;
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
+  const { employee_id, name, email, phone, department, position, salary } =
+    req.body;
 
-            res.json({
-                message: "Employee Deleted Successfully"
-            });
+  db.run(
+    `UPDATE employees
+        SET employee_id = ?,
+            name = ?,
+            email = ?,
+            phone = ?,
+            department = ?,
+            position = ?,
+            salary = ?
+        WHERE id = ?`,
+    [employee_id, name, email, phone, department, position, salary, id],
+    function (err) {
+      if (err) {
+        return res.status(500).json({
+          error: err.message,
+        });
+      }
 
-        }
-    );
+      res.json({
+        message: "Employee Updated Successfully",
+      });
+    },
+  );
+});
+app.get("/employees/:id", (req, res) => {
+  const id = req.params.id;
 
+  db.get("SELECT * FROM employees WHERE id = ?", [id], (err, row) => {
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+
+    res.json(row);
+  });
 });
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -11,10 +11,15 @@ async function loadEmployees() {
             <tr>
                 <td>${employee.employee_id}</td>
                 <td>${employee.name}</td>
+                <td>${employee.email}</td>
+                <td>${employee.phone}</td>
                 <td>${employee.department}</td>
                 <td>${employee.position}</td>
+                <td>${employee.salary}</td>
                 <td>
-                    <button>Edit</button>
+                    <button onclick="editEmployee(${employee.id})">
+                        Edit
+                    </button>
                     <button onclick="deleteEmployee(${employee.id})">
                        Delete
                     </button>
@@ -45,4 +50,7 @@ async function deleteEmployee(id) {
   alert(data.message);
 
   loadEmployees();
+}
+function editEmployee(id) {
+  window.location.href = `edit-employee.html?id=${id}`;
 }
