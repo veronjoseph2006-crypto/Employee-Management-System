@@ -5,8 +5,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f7fc;
+    color: #1f2937;
 }
 
 .login-container {
@@ -40,17 +41,19 @@ input {
 
 button {
     margin-top: 20px;
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     background: #2563eb;
     color: white;
     font-size: 16px;
+    transition: all 0.3s ease;
 }
 
 button:hover {
     background: #1d4ed8;
+    transform: translateY(-2px);
 }
 
 #message {
@@ -65,10 +68,11 @@ button:hover {
 }
 
 .sidebar {
-    width: 220px;
-    background: #2563eb;
+    width: 240px;
+    background: linear-gradient(180deg, #2563eb, #1e3a8a);
     color: white;
-    padding: 20px;
+    padding: 25px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar h2 {
@@ -100,10 +104,16 @@ button:hover {
 
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 200px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 16px;
+    width: 240px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 .card p {
@@ -135,6 +145,16 @@ table {
     width: 100%;
     border-collapse: collapse;
     background: white;
+}
+
+table {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+tr:hover {
+    background-color: #f8fafc;
 }
 
 th,
@@ -183,12 +203,16 @@ th {
     font-weight: bold;
     color: green;
 }
+
 .sidebar a {
     color: white;
     text-decoration: none;
     display: block;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
 }
 
 .sidebar a:hover {
-    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.15);
 }
