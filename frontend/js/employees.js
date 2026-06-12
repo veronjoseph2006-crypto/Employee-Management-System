@@ -1,13 +1,13 @@
 async function loadEmployees() {
-    const response = await fetch("http://localhost:3000/employees");
-    const employees = await response.json();
+  const response = await fetch("http://localhost:3000/employees");
+  const employees = await response.json();
 
-    const tableBody = document.getElementById("employeeTableBody");
+  const tableBody = document.getElementById("employeeTableBody");
 
-    tableBody.innerHTML = "";
+  tableBody.innerHTML = "";
 
-    employees.forEach(employee => {
-        const row = `
+  employees.forEach((employee) => {
+    const row = `
             <tr>
                 <td>${employee.employee_id}</td>
                 <td>${employee.name}</td>
@@ -15,13 +15,34 @@ async function loadEmployees() {
                 <td>${employee.position}</td>
                 <td>
                     <button>Edit</button>
-                    <button>Delete</button>
+                    <button onclick="deleteEmployee(${employee.id})">
+                       Delete
+                    </button>
                 </td>
             </tr>
         `;
 
-        tableBody.innerHTML += row;
-    });
+    tableBody.innerHTML += row;
+  });
 }
 
 loadEmployees();
+async function deleteEmployee(id) {
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this employee?",
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  const response = await fetch(`http://localhost:3000/employees/${id}`, {
+    method: "DELETE",
+  });
+
+  const data = await response.json();
+
+  alert(data.message);
+
+  loadEmployees();
+}

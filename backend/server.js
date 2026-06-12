@@ -113,6 +113,29 @@ app.post("/employees", (req, res) => {
     );
 
 });
+app.delete("/employees/:id", (req, res) => {
+
+    const id = req.params.id;
+
+    db.run(
+        "DELETE FROM employees WHERE id = ?",
+        [id],
+        function (err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json({
+                message: "Employee Deleted Successfully"
+            });
+
+        }
+    );
+
+});
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
