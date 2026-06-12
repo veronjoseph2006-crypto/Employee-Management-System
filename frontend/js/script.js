@@ -9,8 +9,12 @@ if (loginBtn) {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        if (username === "emsadmin" && password === "ems2026") {
-            window.location.href = "dashboard.html";
+        if(username === "emsadmin" && password === "ems2026"){
+
+           sessionStorage.setItem("loggedIn", "true");
+
+           window.location.href = "dashboard.html";
+
         } else {
             message.textContent = "Invalid Username or Password";
         }

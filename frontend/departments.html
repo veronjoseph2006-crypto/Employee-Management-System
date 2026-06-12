@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Departments</h1>
+
+    <table border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>Employee Count</th>
+            </tr>
+        </thead>
+
+        <tbody id="departmentTableBody">
+        </tbody>
+    </table>
+
+    <br>
+
+    <button onclick="window.location.href='dashboard.html'">
+        Back to Dashboard
+    </button>
+</div>
+
+<script>
+async function loadDepartments() {
+
+    const response = await fetch("http://localhost:3000/employees");
+    const employees = await response.json();
+
+    const departmentCounts = {};
+
+    employees.forEach(employee => {
+
+        const department = employee.department;
+
+        if (!departmentCounts[department]) {
+            departmentCounts[department] = 0;
+        }
+
+        departmentCounts[department]++;
+    });
+
+    const tableBody =
+        document.getElementById("departmentTableBody");
+
+    tableBody.innerHTML = "";
+
+    for (const department in departmentCounts) {
+
+        tableBody.innerHTML += `
+            <tr>
+                <td>${department}</td>
+                <td>${departmentCounts[department]}</td>
+            </tr>
+        `;
+    }
+}
+
+loadDepartments();
+</script>
+
+</body>
+</html>

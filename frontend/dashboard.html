@@ -10,6 +10,12 @@
 </head>
 
 <body>
+    <script>
+        if (sessionStorage.getItem("loggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+
 
     <div class="dashboard-container">
 
@@ -26,11 +32,11 @@
                 </li>
 
                 <li>
-                    <a href="#">Departments</a>
+                    <a href="departments.html">Departments</a>
                 </li>
 
                 <li>
-                    <a href="login.html">Logout</a>
+                    <a href="#" onclick="logout()">Logout</a>
                 </li>
             </ul>
         </div>
@@ -86,6 +92,12 @@
         }
 
         loadDashboard();
+    </script>
+    <script>
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            window.location.href = "login.html";
+        }
     </script>
 
 </body>
