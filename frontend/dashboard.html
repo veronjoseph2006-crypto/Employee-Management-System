@@ -31,10 +31,9 @@
             </div>
 
             <div class="cards">
-
                 <div class="card">
                     <h3>Total Employees</h3>
-                    <p>25</p>
+                    <p id="totalEmployees">0</p>
                 </div>
 
                 <div class="card">
@@ -52,6 +51,18 @@
         </div>
 
     </div>
+    <script>
+        async function loadDashboard() {
+
+            const response = await fetch("http://localhost:3000/employees");
+            const employees = await response.json();
+
+            document.getElementById("totalEmployees").textContent =
+                employees.length;
+        }
+
+        loadDashboard();
+    </script>
 
 </body>
 

@@ -9,8 +9,8 @@ if (loginBtn) {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        if (username === "admin" && password === "admin123") {
-            message.textContent = "Login Successful";
+        if (username === "emsadmin" && password === "ems2026") {
+            window.location.href = "dashboard.html";
         } else {
             message.textContent = "Invalid Username or Password";
         }
@@ -43,6 +43,6 @@ if (addEmployeeForm) {
 
         const data = await response.json();
 
-        alert(data.message);
+        window.location.href = "employees.html";
     });
 }
